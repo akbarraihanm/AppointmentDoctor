@@ -15,9 +15,8 @@ Route::get('/', function () {
     return view('index');
 });
 Route::get('/pasien','PasienController@dataPasien');
-Route::get('/dokter', function () {
-    return view('datadokter');
-});
+Route::get('/dokter','DokterController@dataDokter');
+Route::post('/addData','DokterController@storeData');
 Route::get('/history', function () {
     return view('history');
 });

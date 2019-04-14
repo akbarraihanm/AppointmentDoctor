@@ -1,4 +1,18 @@
 @include('layouts.header')
+<style type="text/css">
+.tengah {
+    margin: 50px auto;
+    margin-top: 10px auto;
+    /* width: 800px; */
+    /* padding: 10px; */
+    border: 1px solid #ccc;
+    /* background: lightblue; */
+}
+    .tengah2 {
+        /* margin-top: 5px; */
+        margin-bottom: 20px;
+    }
+</style>
   <div id="wrapper">
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav">
@@ -40,23 +54,31 @@
           <div class="card-body">
             <div class="table-responsive">
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                @include('layouts.modaltddokter')
+                <a class="btn btn-primary tengah2" data-toggle="modal" data-target="#add" href="#add">Tambah Data</a>
                 <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>Position</th>
-                    <th>Office</th>
-                    <th>Age</th>
-                    <th>Start date</th>
-                    <th>Salary</th>
+                    <th>Nama</th>
+                    <th>Poli</th>
+                    <th>No.Telp</th>
+                    <th>Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <td>Name</td>
-                  <td>Position</td>
-                  <th>Office</th>
-                  <th>Age</th>
-                  <th>Start date</th>
-                  <th>Salary</th>
+                  @foreach($dokter as $d)
+                  <tr>
+                    <td>{{$d->nama_dokter}}</td>
+                    <td>{{$d->nama_poli}}</td>
+                    <td>{{$d->notelp_dokter}}</td>
+                    <td>
+                      <form action="{{ url('/hapus', $d->id) }}" method="post">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
+                        <button class="btn btn-danger" type="submit" onclick="return confirm('Yakin ingin menghapus data?')">Hapus</button>
+                      </form>
+                    </td>
+                  </tr>
+                  @endforeach
                 </tbody>
               </table>
             </div>
@@ -78,7 +100,6 @@
 
   <!-- Scroll to Top Button-->
 @include('layouts.scrollbutton')
-
   <!-- Logout Modal-->
 @include('layouts.modal')
 

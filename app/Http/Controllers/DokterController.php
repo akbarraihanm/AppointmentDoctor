@@ -27,6 +27,16 @@ class DokterController extends Controller
         }
     }
 
+    public function dataDokter(){
+      $dokter = Dokter::join('polis','dokters.poli_id','polis.id')
+      ->select('dokters.id','nama_poli','dokters.nama_dokter','dokters.notelp_dokter')
+      ->get();
+      if($dokter){
+        $poli = Poli::all();
+        return view('datadokter',['dokter'=>$dokter,'poli'=>$poli]);
+      }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -65,6 +75,18 @@ class DokterController extends Controller
             'message' => 'Internal server error'
           ], 500);
         }
+    }
+
+    public function storeData(Request $request){
+      $this->validate($request, [
+        'poli_id'=>'required',
+        'nama_dokter'=>'required',
+        'notelp_dokter'=>'required|unique:dokters|max:12',
+        'username'=>'required|unique:dokters|max:15',
+        'password'=>'required|min:4|max:15'
+      ]);
+      Dokter::create($request->all());
+      return redirect('/dokter');
     }
 
     /**

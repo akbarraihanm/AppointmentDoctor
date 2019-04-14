@@ -2,13 +2,13 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h8 class="modal-title" id="exampleModalLabel">Tambah Data Pasien</h8>
+        <h8 class="modal-title" id="exampleModalLabel">Tambah Data Dokter</h8>
         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
       </div>
 
-@include('layouts.tambahdatapasien')
+@include('layouts.tddokter')
     </div>
   </div>
 </div>
