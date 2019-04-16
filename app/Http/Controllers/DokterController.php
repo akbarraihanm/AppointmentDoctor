@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Dokter;
 use App\Poli;
+use App\Jadwal;
 use Illuminate\Http\Request;
 
 class DokterController extends Controller
@@ -33,6 +34,7 @@ class DokterController extends Controller
       ->get();
       if($dokter){
         $poli = Poli::all();
+        // edit($id)->editData;
         return view('datadokter',['dokter'=>$dokter,'poli'=>$poli]);
       }
     }
@@ -125,6 +127,9 @@ class DokterController extends Controller
     public function edit($id)
     {
         //
+        $editData = Dokter::find($id);
+        $poli = Poli::all();
+        return view('layouts.eddokter',['editData'=>$editData,'poli'=>$poli]);
     }
 
     /**
@@ -139,6 +144,17 @@ class DokterController extends Controller
         //
     }
 
+    public function updateData(Request $request, $id){
+      $dokter = Dokter::find($id);
+      if($dokter){
+        $jadwal = Jadwal::join('dokters','jadwals.dokter_id','dokters.id')
+        ->where('dokter_id',$id)->delete();
+        $dokter->update($request->all());
+        return redirect('/dokter');
+      }
+
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -148,5 +164,15 @@ class DokterController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function deleteData($id){
+      $dokter = Dokter::find($id);
+      if($dokter){
+        $jadwal = Jadwal::join('dokters','jadwals.dokter_id','dokters.id')
+        ->where('dokter_id',$id)->delete();
+      }
+      $dokter->delete();
+      return redirect('/dokter');
     }
 }

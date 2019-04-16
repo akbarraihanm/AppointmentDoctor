@@ -50,13 +50,13 @@ class AppoController extends Controller
         $this->validate($request,[
           'pasien_id'=>'required',
           'dokter_id'=>'required',
-          'dokpoli_id'=>'required',
+          'poli_id'=>'required',
           'tanggal_appo'=>'required'
         ]);
         if(Appointment::create([
           'pasien_id'=>$request->pasien_id,
           'dokter_id'=>$request->dokter_id,
-          'dokpoli_id'=>$request->dokpoli_id,
+          'poli_id'=>$request->poli_id,
           'status_appo'=>'Menunggu',
           'tanggal_appo'=>$request->tanggal_appo
           ])){

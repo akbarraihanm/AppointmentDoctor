@@ -17,7 +17,7 @@ class JadwalController extends Controller
     {
         //
         $jadwal = Jadwal::join('dokters','jadwals.dokter_id','dokters.id')
-        ->select('jadwals.id','jadwals.dokter_id','jadwals.dokpoli_id',
+        ->select('jadwals.id','jadwals.dokter_id','jadwals.poli_id',
         'nama_dokter','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
         ->get();
         return response()->json([
@@ -48,7 +48,7 @@ class JadwalController extends Controller
         //
         $this->validate($request,[
           'dokter_id'=>'required',
-          'dokpoli_id'=>'required',
+          'poli_id'=>'required',
           'tanggal'=>'required',
           'jam_mulai'=>'required',
           'jam_selesai'=>'required'
@@ -82,9 +82,9 @@ class JadwalController extends Controller
             'status'=>'success',
             'data'=>$jadwal
             ->join('dokters','jadwals.dokter_id','dokters.id')
-            ->select('jadwals.id','jadwals.dokter_id','jadwals.dokpoli_id',
+            ->select('jadwals.id','jadwals.dokter_id','jadwals.poli_id',
             'nama_dokter','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
-            ->where('dokpoli_id',$id)
+            ->where('poli_id',$id)
             ->get()
           ]);
         }
@@ -96,6 +96,10 @@ class JadwalController extends Controller
         }
     }
 
+    public function showJadwalDokter($id){
+      $findJadwal = Dokter::find($id);
+      
+    }
     /**
      * Show the form for editing the specified resource.
      *

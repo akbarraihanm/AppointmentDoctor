@@ -24,8 +24,8 @@ class CreateAppointmentsTable extends Migration
           $table->foreign('pasien_id')->references('id')->on('pasiens');
           $table->unsignedInteger('dokter_id');
           $table->foreign('dokter_id')->references('id')->on('dokters');
-          $table->unsignedInteger('dokpoli_id');
-          $table->foreign('dokpoli_id')->references('poli_id')->on('dokters');
+          $table->unsignedInteger('poli_id');
+          $table->foreign('poli_id')->references('id')->on('polis');
         });
         Schema::enableForeignKeyConstraints();
     }

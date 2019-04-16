@@ -15,10 +15,18 @@ Route::get('/', function () {
     return view('index');
 });
 Route::get('/pasien','PasienController@dataPasien');
+Route::post('/daftar','PasienController@tambahData');
+Route::delete('/hapus/{id}', 'PasienController@deleteData');
+Route::get('/testing', function(){
+  return view('layouts.vjadwal');
+});
+
 Route::get('/dokter','DokterController@dataDokter');
+Route::get('/edit/{id}','DokterController@edit');
+Route::delete('/deleteData/{id}','DokterController@deleteData');
+Route::put('/updateData/{id}','DokterController@updateData');
 Route::post('/addData','DokterController@storeData');
+
 Route::get('/history', function () {
     return view('history');
 });
-Route::post('/daftar','PasienController@tambahData');
-Route::delete('/hapus/{id}', 'PasienController@deleteData');
