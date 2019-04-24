@@ -17,7 +17,7 @@ class JadwalController extends Controller
     {
         //
         $jadwal = Jadwal::join('dokters','jadwals.dokter_id','dokters.id')
-        ->select('jadwals.id','jadwals.dokter_id','jadwals.poli_id',
+        ->select('jadwals.id','dokter_id','jadwals.poli_id',
         'nama_dokter','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
         ->get();
         return response()->json([
@@ -25,6 +25,14 @@ class JadwalController extends Controller
           'data'=>$jadwal
         ]);
 
+    }
+
+    public function showAllData(){
+      $jadwal = Jadwal::join('dokters','jadwals.dokter_id','dokters.id')
+      ->select('jadwals.id','jadwals.dokter_id','jadwals.poli_id',
+      'nama_dokter','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
+      ->get();
+      return view('datajadwal',['jadwal'=>$jadwal]);
     }
 
     /**
@@ -46,13 +54,14 @@ class JadwalController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request,[
+        $this->validate($request, [
           'dokter_id'=>'required',
           'poli_id'=>'required',
           'tanggal'=>'required',
           'jam_mulai'=>'required',
           'jam_selesai'=>'required'
         ]);
+
         if(Jadwal::create($request->all())){
           return response()->json([
             'status'=>'success',
@@ -65,6 +74,12 @@ class JadwalController extends Controller
             'message' => 'Internal server error'
           ], 500);
         }
+    }
+
+    public function storeData(Request $request){
+      $this->validate($request, [
+
+      ]);
     }
 
     /**
@@ -81,10 +96,10 @@ class JadwalController extends Controller
           return response()->json([
             'status'=>'success',
             'data'=>$jadwal
-            ->join('dokters','jadwals.dokter_id','dokters.id')
+            ->join('dokters','dokters.id','=','jadwals.dokter_id')
             ->select('jadwals.id','jadwals.dokter_id','jadwals.poli_id',
             'nama_dokter','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
-            ->where('poli_id',$id)
+            ->where('jadwals.dokter_id',$id)
             ->get()
           ]);
         }
@@ -97,8 +112,31 @@ class JadwalController extends Controller
     }
 
     public function showJadwalDokter($id){
-      $findJadwal = Dokter::find($id);
-      
+      $findJadwal = Jadwal::find($id);
+      if($findJadwal){
+
+        return view('datajadwal',['findJadwal'=>$findJadwal
+                ->join('dokters','dokters.id','=','jadwals.dokter_id')
+                ->select('jadwals.id','jadwals.dokter_id','jadwals.poli_id',
+                'nama_dokter','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
+                ->where('jadwals.dokter_id',$id)
+                ->get()
+              ,'dokterId'=>$id]);
+      }
+    }
+
+    public function showJadwalDokter2($id){
+      $findJadwal = Jadwal::find($id);
+      if($findJadwal){
+
+        return view('layouts.tambahjadwal',['findJadwal'=>$findJadwal
+                ->join('dokters','dokters.id','=','jadwals.dokter_id')
+                ->select('jadwals.id','jadwals.dokter_id','jadwals.poli_id',
+                'nama_dokter','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
+                ->where('jadwals.dokter_id',$id)
+                ->get()
+              ]);
+      }
     }
     /**
      * Show the form for editing the specified resource.
@@ -132,5 +170,19 @@ class JadwalController extends Controller
     public function destroy($id)
     {
         //
+        $deleteJadwal = Jadwal::find($id);
+        if($deleteJadwal){
+          $deleteJadwal->delete();
+          return response()->json([
+            'status'=>'success',
+            'message'=>'Data has been deleted'
+          ]);
+        }
+        else{
+          return response()->json([
+            'status'=>'error',
+            'message'=>'Cannot deleting data'
+          ], 400);
+        }
     }
 }

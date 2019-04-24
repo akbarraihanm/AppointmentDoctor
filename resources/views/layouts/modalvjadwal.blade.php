@@ -9,9 +9,7 @@
       </div>
       <div class="container">
         <div class="card-body">
-          <form class="form-horizontal" method="GET" action="" href="#">
-            @csrf
-            {{ method_field('get') }}
+          <div class="card-body">
             <div class="form-group">
               <div>
                 <label for="dropdown">Pilih Poli</label>
@@ -23,9 +21,9 @@
               </div>
             </div>
             <div class="text-center">
-              <button class="btn btn-primary" type="submit">Lihat</button>
+              <button href="{{url('/dokter/jadwal',$p->id)}}" class="btn btn-primary">Lihat</button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
       <!-- Bootstrap core JavaScript-->

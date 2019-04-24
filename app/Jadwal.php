@@ -9,7 +9,7 @@ class Jadwal extends Model
     //
     protected $fillable = [
       'dokter_id',
-      'dokpoli_id',
+      'poli_id',
       'tanggal',
       'jam_mulai',
       'jam_selesai'

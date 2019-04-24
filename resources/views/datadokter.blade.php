@@ -60,9 +60,8 @@
             <div class="table-responsive">
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 @include('layouts.modaltddokter')
-                @include('layouts.modalvjadwal')
+
                 <a class="btn btn-primary tengah2" data-toggle="modal" data-target="#add" href="#add">Tambah Data</a>
-                <a class="btn btn-secondary tengah3" data-toggle="modal" data-target="#viewjadwal" href="#add">Lihat Jadwal</a>
                 <thead>
                   <tr>
                     <th>Nama</th>
@@ -81,6 +80,7 @@
                       <form action="{{url('/deleteData',$d->id)}}" method="post">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
+                        <a class="btn btn-secondary" href="{{url('/jadwal',$d->id)}}">Lihat Jadwal</a>
                         <a href="{{url('/edit',$d->id)}}" class="btn-primary btn">Ubah</a>
                         <button class="btn btn-danger" type="submit" onclick="return confirm('Yakin ingin menghapus data?')">Hapus</button>
                       </form>
