@@ -99,22 +99,15 @@ class DokterController extends Controller
      */
     public function show($id)
     {
-        $dokter = Dokter::find($id);
+        $dokter = Dokter::join('polis','polis.id','=','dokters.poli_id')
+        ->select('dokters.id','dokters.poli_id','nama_poli','dokters.nama_dokter','dokters.notelp_dokter')
+        ->where('poli_id',$id)
+        ->get();
         if($dokter){
           return response()->json([
             'status'=>'success',
             'data'=>$dokter
-            ->join('polis','polis.id','=','dokters.poli_id')
-            ->select('dokters.id','dokters.poli_id','nama_poli','dokters.nama_dokter','dokters.notelp_dokter')
-            ->where('poli_id',$id)
-            ->get()
           ]);
-        }
-        else{
-          return response()->json([
-            'status'=>'error',
-            'message'=>'Data not found'
-          ], 404);
         }
     }
 

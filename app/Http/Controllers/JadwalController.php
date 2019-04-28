@@ -91,16 +91,15 @@ class JadwalController extends Controller
     public function show($id)
     {
         //
-        $jadwal = Jadwal::find($id);
+        $jadwal = Jadwal::join('dokters','dokters.id','=','jadwals.dokter_id')
+        ->select('jadwals.dokter_id','jadwals.poli_id',
+        'dokters.nama_dokter','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
+        ->where('dokter_id',$id)
+        ->get();
         if($jadwal){
           return response()->json([
             'status'=>'success',
             'data'=>$jadwal
-            ->join('dokters','dokters.id','=','jadwals.dokter_id')
-            ->select('jadwals.id','jadwals.dokter_id','jadwals.poli_id',
-            'nama_dokter','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
-            ->where('jadwals.dokter_id',$id)
-            ->get()
           ]);
         }
         else{
@@ -112,17 +111,20 @@ class JadwalController extends Controller
     }
 
     public function showJadwalDokter($id){
-      $findJadwal = Jadwal::find($id);
+      $findJadwal = Jadwal::join('dokters','dokters.id','=','jadwals.dokter_id')
+      ->select('jadwals.id','jadwals.dokter_id','jadwals.poli_id',
+      'jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
+      ->where('dokter_id',$id)
+      ->get();
       if($findJadwal){
 
         return view('datajadwal',['findJadwal'=>$findJadwal
-                ->join('dokters','dokters.id','=','jadwals.dokter_id')
-                ->select('jadwals.id','jadwals.dokter_id','jadwals.poli_id',
-                'nama_dokter','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
-                ->where('jadwals.dokter_id',$id)
-                ->get()
               ,'dokterId'=>$id]);
       }
+      else{
+        return abort(404);
+      }
+
     }
 
     public function showJadwalDokter2($id){

@@ -22,12 +22,12 @@
 
       <div class="form-group">
         <div >
-          <input type="hidden" id="dokter_id" class="form-control" name="dokter_id" value="{{$findJadwal[0]->dokter_id}}" required="required">
+          <input type="text" id="dokter_id" class="form-control" name="dokter_id" value="{{$findJadwal[0]->dokter_id}}" required="required">
         </div>
       </div>
       <div class="form-group">
         <div >
-          <input type="hidden" id="poli_id" class="form-control" name="poli_id" value="{{$findJadwal[0]->poli_id}}" required="required">
+          <input type="text" id="poli_id" class="form-control" name="poli_id" value="{{$findJadwal[0]->poli_id}}" required="required">
         </div>
       </div>
 

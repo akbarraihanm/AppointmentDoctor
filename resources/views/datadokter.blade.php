@@ -17,6 +17,10 @@
         margin-left: 10px;
         margin-bottom: 20px;
     }
+    .disabled {
+        pointer-events: none;
+        cursor: default;
+    }
 </style>
   <div id="wrapper">
     <!-- Sidebar -->
@@ -60,7 +64,6 @@
             <div class="table-responsive">
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 @include('layouts.modaltddokter')
-
                 <a class="btn btn-primary tengah2" data-toggle="modal" data-target="#add" href="#add">Tambah Data</a>
                 <thead>
                   <tr>
@@ -80,6 +83,7 @@
                       <form action="{{url('/deleteData',$d->id)}}" method="post">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
+
                         <a class="btn btn-secondary" href="{{url('/jadwal',$d->id)}}">Lihat Jadwal</a>
                         <a href="{{url('/edit',$d->id)}}" class="btn-primary btn">Ubah</a>
                         <button class="btn btn-danger" type="submit" onclick="return confirm('Yakin ingin menghapus data?')">Hapus</button>

@@ -59,8 +59,8 @@
           <div class="card-body">
             <div class="table-responsive">
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                @include('layouts.modaltdjadwal')
-                <a class="btn btn-primary tengah2" data-toggle="modal" data-target="#addJadwal" href="#add">Tambah Data</a>
+
+                <a class="btn btn-primary tengah2" href="{{url('/jadwal/tambah',$dokterId)}}">Tambah Data</a>
                 <thead>
                   <tr>
                     <th>Tanggal</th>
