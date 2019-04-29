@@ -117,27 +117,33 @@ class JadwalController extends Controller
       ->where('dokter_id',$id)
       ->get();
       if($findJadwal){
-
+        $findPoli = Dokter::select('poli_id','nama_dokter')
+        ->where('id',$id)
+        ->get();
+        $findIdPoli = $findPoli[0]->poli_id;
+        $namaDokter = $findPoli[0]->nama_dokter;
         return view('datajadwal',['findJadwal'=>$findJadwal
-              ,'dokterId'=>$id]);
-      }
-      else{
-        return abort(404);
+              ,'dokterId'=>$id
+              ,'poliId'=>$findIdPoli
+              ,'namaDokter'=>$namaDokter]);
       }
 
     }
 
     public function showJadwalDokter2($id){
-      $findJadwal = Jadwal::find($id);
+      $findJadwal = Jadwal::join('dokters','dokters.id','=','jadwals.dokter_id')
+      ->select('jadwals.id','jadwals.dokter_id','jadwals.poli_id',
+      'jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
+      ->where('dokter_id',$id)
+      ->get();
       if($findJadwal){
-
+        $findPoli = Dokter::select('poli_id')
+        ->where('id',$id)
+        ->get();
+        $findIdPoli = $findPoli[0]->poli_id;
         return view('layouts.tambahjadwal',['findJadwal'=>$findJadwal
-                ->join('dokters','dokters.id','=','jadwals.dokter_id')
-                ->select('jadwals.id','jadwals.dokter_id','jadwals.poli_id',
-                'nama_dokter','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
-                ->where('jadwals.dokter_id',$id)
-                ->get()
-              ]);
+              ,'dokterId'=>$id
+              ,'poliId'=>$findIdPoli]);
       }
     }
     /**

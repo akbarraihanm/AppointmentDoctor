@@ -55,12 +55,12 @@
         <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-table"></i>
-            Data Dokter</div>
+          {{$namaDokter}}</div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-
-                <a class="btn btn-primary tengah2" href="{{url('/jadwal/tambah',$dokterId)}}">Tambah Data</a>
+                @include('layouts.modaltdjadwal')
+                <a class="btn btn-primary tengah2" data-toggle="modal" data-target="#addJadwal" href="">Tambah Data</a>
                 <thead>
                   <tr>
                     <th>Tanggal</th>
