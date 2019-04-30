@@ -120,9 +120,12 @@ class DokterController extends Controller
     public function edit($id)
     {
         //
+        $join = Dokter::join('polis','polis.id','=','dokters.poli_id');
         $editData = Dokter::find($id);
         $poli = Poli::all();
-        return view('layouts.eddokter',['editData'=>$editData,'poli'=>$poli]);
+        $idPol = $join->select('dokters.poli_id')->where('dokters.id',$id)->get();
+        $naPol = $join->select('polis.nama_poli')->where('dokters.id',$id)->get();
+        return view('layouts.eddokter',['editData'=>$editData,'poli'=>$poli,'idPol'=>$idPol,'naPol'=>$naPol[0]->nama_poli]);
     }
 
     /**
@@ -140,8 +143,6 @@ class DokterController extends Controller
     public function updateData(Request $request, $id){
       $dokter = Dokter::find($id);
       if($dokter){
-        $jadwal = Jadwal::join('dokters','jadwals.dokter_id','dokters.id')
-        ->where('dokter_id',$id)->delete();
         $dokter->update($request->all());
         return redirect('/dokter');
       }

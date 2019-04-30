@@ -24,8 +24,9 @@ Route::delete('/deleteData/{id}','DokterController@deleteData');
 Route::put('/updateData/{id}','DokterController@updateData');
 Route::post('/addData','DokterController@storeData');
 
-Route::get('/jadwal/{id}','JadwalController@showJadwalDokter');
-Route::get('/jadwal/tambah/{id}','JadwalController@showJadwalDokter2');
+Route::get('/jadwal/{id}','JadwalController@showJadwalDokter')->name('jadwal');
+Route::post('/tambah-jadwal','JadwalController@storeData');
+Route::delete('/hapusJadwal/{id}','JadwalController@deleteData')->name('hapusJadwal');
 
 Route::get('/history', function () {
     return view('history');

@@ -78,8 +78,16 @@ class JadwalController extends Controller
 
     public function storeData(Request $request){
       $this->validate($request, [
-
+        'dokter_id'=>'required',
+        'poli_id'=>'required',
+        'tanggal'=>'required',
+        'jam_mulai'=>'required',
+        'jam_selesai'=>'required'
       ]);
+      Jadwal::create($request->all());
+      $id = $request->dokter_id;
+      $test = Jadwal::where('id',$id)->first();
+      return redirect()->route('jadwal',['id'=>$test]);
     }
 
     /**
@@ -92,7 +100,7 @@ class JadwalController extends Controller
     {
         //
         $jadwal = Jadwal::join('dokters','dokters.id','=','jadwals.dokter_id')
-        ->select('jadwals.dokter_id','jadwals.poli_id',
+        ->select('jadwals.id','jadwals.dokter_id','jadwals.poli_id',
         'dokters.nama_dokter','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
         ->where('dokter_id',$id)
         ->get();
@@ -192,5 +200,13 @@ class JadwalController extends Controller
             'message'=>'Cannot deleting data'
           ], 400);
         }
+    }
+
+    public function deleteData($id){
+      $join = Jadwal::join('dokters','jadwals.dokter_id','dokters.id');
+      $getIdDok = $join->select('dokters.id')->where('jadwals.id',$id)->first();
+      $delete = Jadwal::find($id);
+      $delete->delete();
+      return redirect()->route('jadwal',['id'=>$getIdDok]);
     }
 }

@@ -9,7 +9,7 @@
       </div>
       <div class="container">
         <div class="card-body">
-          <form class="form-horizontal" method="POST" action="{{url('/daftar')}}" href="{{url('/pasien')}}">
+          <form class="form-horizontal" method="POST" action="{{url('/tambah-jadwal')}}">
             @csrf
             {{ method_field('post') }}
             <div class="form-group">
@@ -31,13 +31,13 @@
             <div class="form-group">
               <label for="alamat_pasien">Jam Mulai</label>
               <div>
-                <input type="text" id="jam_mulai" class="form-control"  name="jam_mulai" required="required">
+                <input type="time" id="jam_mulai" class="form-control"  name="jam_mulai" required="required">
               </div>
             </div>
             <div class="form-group">
               <label for="alamat_pasien">Jam Selesai</label>
               <div>
-                <input type="text" id="jam_selesai" class="form-control"  name="jam_selesai" required="required">
+                <input type="time" id="jam_selesai" class="form-control"  name="jam_selesai" required="required">
               </div>
             </div>
             <div class="text-center">

@@ -55,7 +55,7 @@
         <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-table"></i>
-          {{$namaDokter}}</div>
+          Jadwal / {{$namaDokter}}</div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -76,10 +76,9 @@
                     <td>{{$f->jam_mulai}}</td>
                     <td>{{$f->jam_selesai}}</td>
                     <td>
-                      <form action="{{url('/deleteData',$f->id)}}" method="post">
+                      <form action="{{url('/hapusJadwal',$f->id)}}" method="post">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
-                        <a href="{{url('/edit',$f->id)}}" class="btn-primary btn">Ubah</a>
                         <button class="btn btn-danger" type="submit" onclick="return confirm('Yakin ingin menghapus data?')">Hapus</button>
                       </form>
                     </td>
