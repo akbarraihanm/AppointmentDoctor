@@ -86,8 +86,8 @@ class JadwalController extends Controller
       ]);
       Jadwal::create($request->all());
       $id = $request->dokter_id;
-      $test = Jadwal::where('id',$id)->first();
-      return redirect()->route('jadwal',['id'=>$test]);
+      // $test = Jadwal::where('id',$id)->first();
+      return redirect()->route('jadwal',['id'=>$id]);
     }
 
     /**
