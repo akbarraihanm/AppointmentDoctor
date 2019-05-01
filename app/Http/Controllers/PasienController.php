@@ -16,12 +16,14 @@ class PasienController extends Controller
     public function index()
     {
         //
-        $pasien = Pasien::select('id','nama_pasien','alamat_pasien','notelp_pasien','norm_pasien')->get();
+        // $pasien = Pasien::select('id','nama_pasien','alamat_pasien','notelp_pasien','norm_pasien')->get();
+        $pasien = Pasien::all();
         return response()->json([
           'status'=>'success',
           'data'=>$pasien
         ]);
     }
+
     public function dataPasien(){
       $pasien = Pasien::all();
       return view('datapasien',['pasien'=>$pasien]);
@@ -85,17 +87,14 @@ class PasienController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($apiKey, $id)
     {
         //
-        $pasien = Pasien::find($id);
+        $pasien = Pasien::select('pasiens.*')->where('id',$id)->get();
         if($pasien){
           return response()->json([
             'status'=>'success',
             'data'=>$pasien
-            ->select('id','nama_pasien','alamat_pasien','notelp_pasien','norm_pasien')
-            ->where('id',$id)
-            ->get()
           ]);
         }
         else{
@@ -124,10 +123,10 @@ class PasienController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $apiKey,$id)
     {
         //
-        $pasien = Pasien::find($id);
+        $pasien = Pasien::where('id',$id)->first();
         if($pasien){
           $pasien->update($request->all());
           return response()->json([

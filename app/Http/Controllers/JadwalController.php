@@ -96,7 +96,7 @@ class JadwalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($apiKey, $id)
     {
         //
         $jadwal = Jadwal::join('dokters','dokters.id','=','jadwals.dokter_id')
@@ -138,22 +138,6 @@ class JadwalController extends Controller
 
     }
 
-    public function showJadwalDokter2($id){
-      $findJadwal = Jadwal::join('dokters','dokters.id','=','jadwals.dokter_id')
-      ->select('jadwals.id','jadwals.dokter_id','jadwals.poli_id',
-      'jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
-      ->where('dokter_id',$id)
-      ->get();
-      if($findJadwal){
-        $findPoli = Dokter::select('poli_id')
-        ->where('id',$id)
-        ->get();
-        $findIdPoli = $findPoli[0]->poli_id;
-        return view('layouts.tambahjadwal',['findJadwal'=>$findJadwal
-              ,'dokterId'=>$id
-              ,'poliId'=>$findIdPoli]);
-      }
-    }
     /**
      * Show the form for editing the specified resource.
      *

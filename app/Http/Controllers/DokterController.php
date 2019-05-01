@@ -17,9 +17,10 @@ class DokterController extends Controller
     public function index()
     {
         //
-        $dokter = Dokter::join('polis','dokters.poli_id','=','polis.id')
-        ->select('dokters.id','dokters.poli_id','nama_poli','dokters.nama_dokter','dokters.notelp_dokter')
-        ->get();
+        $dokter = Dokter::join('polis','dokters.poli_id','=','polis.id')->select('dokters.*','polis.nama_poli')->get();
+        // $dokter = Dokter::join('polis','dokters.poli_id','=','polis.id')
+        // ->select('dokters.id','dokters.poli_id','nama_poli','dokters.nama_dokter','dokters.notelp_dokter')
+        // ->get();
         if($dokter){
           return response()->json([
             'status'=>'success',
@@ -97,7 +98,7 @@ class DokterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($apiKey, $id)
     {
         $dokter = Dokter::join('polis','polis.id','=','dokters.poli_id')
         ->select('dokters.id','dokters.poli_id','nama_poli','dokters.nama_dokter','dokters.notelp_dokter')
@@ -109,6 +110,19 @@ class DokterController extends Controller
             'data'=>$dokter
           ]);
         }
+    }
+
+    public function showIdDokter($apiKey,$id){
+      $dokter = Dokter::join('polis','polis.id','=','dokters.poli_id')
+      ->select('dokters.*','polis.nama_poli')
+      ->where('dokters.id',$id)
+      ->get();
+      if($dokter){
+        return response()->json([
+          'status'=>'success',
+          'data'=>$dokter
+        ]);
+      }
     }
 
     /**
@@ -135,9 +149,23 @@ class DokterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateByIdDokter(Request $request, $apiKey,$id)
     {
         //
+        $dokter = Dokter::where('id',$id)->first();
+        if($dokter){
+          $dokter->update($request->all());
+          return response()->json([
+            'status'=>'success',
+            'message'=>'Data has been updated'
+          ]);
+        }
+        else{
+          return response()->json([
+            'status'=>'error',
+            'message'=>'Cannot update data'
+          ]);
+        }
     }
 
     public function updateData(Request $request, $id){
