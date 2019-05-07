@@ -98,7 +98,7 @@ class DokterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($apiKey, $id)
+    public function show($id)
     {
         $dokter = Dokter::join('polis','polis.id','=','dokters.poli_id')
         ->select('dokters.id','dokters.poli_id','nama_poli','dokters.nama_dokter','dokters.notelp_dokter')
@@ -112,7 +112,7 @@ class DokterController extends Controller
         }
     }
 
-    public function showIdDokter($apiKey,$id){
+    public function showIdDokter($id){
       $dokter = Dokter::join('polis','polis.id','=','dokters.poli_id')
       ->select('dokters.*','polis.nama_poli')
       ->where('dokters.id',$id)

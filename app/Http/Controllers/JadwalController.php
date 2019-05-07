@@ -96,7 +96,7 @@ class JadwalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($apiKey, $id)
+    public function show($id)
     {
         //
         $jadwal = Jadwal::join('dokters','dokters.id','=','jadwals.dokter_id')

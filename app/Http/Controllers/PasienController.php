@@ -87,7 +87,7 @@ class PasienController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($apiKey, $id)
+    public function show($id)
     {
         //
         $pasien = Pasien::select('pasiens.*')->where('id',$id)->get();
@@ -123,7 +123,7 @@ class PasienController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $apiKey,$id)
+    public function update(Request $request,$id)
     {
         //
         $pasien = Pasien::where('id',$id)->first();
