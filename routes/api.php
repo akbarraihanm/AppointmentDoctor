@@ -16,11 +16,10 @@ use Illuminate\Http\Request;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-$apiKey = "72318591234";
-Route::resource('{apiKey}/poli','PoliController');
-Route::resource('{apiKey}/dokter','DokterController');
-Route::get('{apiKey}/dokter/id/{id}','DokterController@showIdDokter');
-Route::put('{apiKey}/dokter/id/{id}','DokterController@updateByIdDokter');
-Route::resource('{apiKey}/pasien','PasienController');
-Route::resource('{apiKey}/jadwal','JadwalController');
-Route::resource('{apiKey}/appo','AppoController');
+Route::resource('72318591234/poli','PoliController');
+Route::resource('72318591234/dokter','DokterController');
+Route::get('72318591234/dokter/id/{id}','DokterController@showIdDokter');
+Route::put('72318591234/dokter/id/{id}','DokterController@updateByIdDokter');
+Route::resource('72318591234/pasien','PasienController');
+Route::resource('72318591234/jadwal','JadwalController');
+Route::resource('72318591234/appo','AppoController');
