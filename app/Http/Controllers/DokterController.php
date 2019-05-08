@@ -116,7 +116,7 @@ class DokterController extends Controller
       $dokter = Dokter::join('polis','polis.id','=','dokters.poli_id')
       ->select('dokters.*','polis.nama_poli')
       ->where('dokters.id',$id)
-      ->get();
+      ->firstOrFail();
       if($dokter){
         return response()->json([
           'status'=>'success',
@@ -149,7 +149,7 @@ class DokterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updateByIdDokter(Request $request, $apiKey,$id)
+    public function updateByIdDokter(Request $request, $id)
     {
         //
         $dokter = Dokter::where('id',$id)->first();
