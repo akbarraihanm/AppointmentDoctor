@@ -90,15 +90,31 @@ class JadwalController extends Controller
       return redirect()->route('jadwal',['id'=>$id]);
     }
 
+    public function show(Request $request){
+      $id = $request->query('id');
+      $jadwal = Jadwal::join('dokters','dokters.id','=','jadwals.dokter_id')
+      ->select('jadwals.id','jadwals.dokter_id','jadwals.poli_id',
+      'dokters.nama_dokter','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
+      ->where('jadwals.id',$id)
+      ->get();
+      if($jadwal){
+        return response()->json([
+          'status'=>'success',
+          'data'=>$jadwal
+        ]);
+      }
+    }
+
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showByDokterId(Request $request)
     {
         //
+        $id = $request->query('id');
         $jadwal = Jadwal::join('dokters','dokters.id','=','jadwals.dokter_id')
         ->select('jadwals.id','jadwals.dokter_id','jadwals.poli_id',
         'dokters.nama_dokter','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
@@ -167,9 +183,10 @@ class JadwalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        $id = $request->query('id');
         $deleteJadwal = Jadwal::find($id);
         if($deleteJadwal){
           $deleteJadwal->delete();

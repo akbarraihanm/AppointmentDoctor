@@ -17,9 +17,20 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 Route::resource('72318591234/poli','PoliController');
-Route::resource('72318591234/dokter','DokterController');
-Route::get('72318591234/dokter/id/{id}','DokterController@showIdDokter');
-Route::put('72318591234/dokter/id/{id}','DokterController@updateByIdDokter');
-Route::resource('72318591234/pasien','PasienController');
-Route::resource('72318591234/jadwal','JadwalController');
+
+Route::get('72318591234/dokter','DokterController@index');
+Route::get('72318591234/dokterpoli/','DokterController@show');
+Route::get('72318591234/dokterid','DokterController@showIdDokter');
+Route::put('72318591234/dokterid','DokterController@updateByIdDokter');
+
+Route::get('72318591234/pasien','PasienController@index');
+Route::get('72318591234/pasienid','PasienController@show');
+Route::put('72318591234/pasienid','PasienController@update');
+Route::delete('72318591234/pasienid','PasienController@destroy');
+
+Route::get('72318591234/jadwal','JadwalController@index');
+Route::get('72318591234/jadwalid','JadwalController@show');
+Route::delete('72318591234/jadwalid','JadwalController@destroy');
+Route::get('72318591234/jadwaldokter','JadwalController@showByDokterId');
+
 Route::resource('72318591234/appo','AppoController');

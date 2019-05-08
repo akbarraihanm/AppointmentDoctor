@@ -16,8 +16,8 @@ class PasienController extends Controller
     public function index()
     {
         //
-        // $pasien = Pasien::select('id','nama_pasien','alamat_pasien','notelp_pasien','norm_pasien')->get();
-        $pasien = Pasien::all();
+        $pasien = Pasien::select('id','nama_pasien','alamat_pasien','notelp_pasien','norm_pasien')->get();
+        // $pasien = Pasien::all();
         return response()->json([
           'status'=>'success',
           'data'=>$pasien
@@ -87,9 +87,10 @@ class PasienController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
         //
+        $id = $request->query('id');
         $pasien = Pasien::select('pasiens.*')->where('id',$id)->get();
         if($pasien){
           return response()->json([
@@ -123,9 +124,10 @@ class PasienController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request)
     {
         //
+        $id = $request->query('id');
         $pasien = Pasien::where('id',$id)->first();
         if($pasien){
           $pasien->update($request->all());
@@ -146,9 +148,10 @@ class PasienController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        $id = $request->query('id');
         $pasien = Pasien::find($id);
         if($pasien){
           $pasien->delete();

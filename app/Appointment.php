@@ -10,7 +10,7 @@ class Appointment extends Model
     protected $fillable = [
       'pasien_id',
       'dokter_id',
-      'dokpoli_id',
+      'poli_id',
       'status_appo',
       'tanggal_appo'
     ];
@@ -20,5 +20,8 @@ class Appointment extends Model
     public function pasien(){
       return $this->belongsTo('App\Pasien');
     }
-    
+    public function poli(){
+      return $this->belongsTo('App\Poli');
+    }
+
 }
