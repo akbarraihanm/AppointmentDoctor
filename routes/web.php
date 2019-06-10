@@ -11,16 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/','AppoController@indexWeb');
+Route::delete('/hapus/appo/{id}','AppoController@delete');
+
 Route::get('/pasien','PasienController@dataPasien');
 Route::post('/daftar','PasienController@tambahData');
 Route::delete('/hapus/{id}', 'PasienController@deleteData');
 
 Route::get('/dokter','DokterController@dataDokter');
 Route::get('/edit/{id}','DokterController@edit');
-Route::delete('/deleteData/{id}','DokterController@deleteData');
+Route::delete('/hapus/dokter/{id}','DokterController@deleteData');
 Route::put('/updateData/{id}','DokterController@updateData');
 Route::post('/addData','DokterController@storeData');
 

@@ -12,7 +12,8 @@ class Appointment extends Model
       'dokter_id',
       'poli_id',
       'status_appo',
-      'tanggal_appo'
+      'tanggal_appo',
+      'keterangan'
     ];
     public function dokter(){
       return $this->belongsTo('App\Dokter');

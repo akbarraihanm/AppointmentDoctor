@@ -25,15 +25,9 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="notelp_pasien">No.Telp</label>
-              <div>
-                <input type="text" id="notelp_pasien" class="form-control"  name="notelp_pasien" required="required">
-              </div>
-            </div>
-            <div class="form-group">
               <label for="norm_pasien">No.Rekam Medis</label>
               <div>
-                <input type="text" id="firstName" class="form-control"  name="norm_pasien" required="required">
+                <input type="text" id="norm_pasien" class="form-control"  name="norm_pasien" required="required">
               </div>
             </div>
             <div class="form-group">

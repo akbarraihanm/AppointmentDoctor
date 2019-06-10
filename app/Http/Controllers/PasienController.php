@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Pasien;
 use App\Appointment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class PasienController extends Controller
 {
@@ -16,7 +17,7 @@ class PasienController extends Controller
     public function index()
     {
         //
-        $pasien = Pasien::select('id','nama_pasien','alamat_pasien','notelp_pasien','norm_pasien')->get();
+        $pasien = Pasien::all();
         // $pasien = Pasien::all();
         return response()->json([
           'status'=>'success',
@@ -27,6 +28,45 @@ class PasienController extends Controller
     public function dataPasien(){
       $pasien = Pasien::all();
       return view('datapasien',['pasien'=>$pasien]);
+    }
+
+    public function login(Request $request){
+      $norm_pasien = $request->norm_pasien;
+      $password = $request->password;
+
+      $pasien = Pasien::where('norm_pasien',$norm_pasien)->first();
+      if(@count($pasien) > 0){
+        $pasien = Pasien::where('password',$password)->first();
+        if(@count($pasien) > 0){
+          Session::put('id',$pasien->id);
+          return response()->json([
+            'status'=>'sukses',
+            'pesan'=>'Anda berhasil masuk',
+            'id_pasien'=>Session::get('id')
+          ]);
+        }
+        else{
+          return response()->json([
+            'status'=>'gagal',
+            'pesan'=>'Password Anda salah'
+          ]);
+        }
+      }
+      else{
+        return response()->json([
+          'status'=>'gagal',
+          'pesan'=>'Masukkan email dan password dengan benar'
+        ]);
+      }
+    }
+
+    public function logout(){
+        Session::flush();
+        return response()->json([
+          'status'=>'sukses',
+          'pesan'=>'Anda berhasil keluar',
+          'login_status'=>Session::flush()
+        ]);
     }
 
     /**
@@ -51,7 +91,6 @@ class PasienController extends Controller
         $this->validate($request, [
           'nama_pasien'=>'required|max:50',
           'alamat_pasien'=>'required',
-          'notelp_pasien'=>'required|unique:pasiens|max:12',
           'norm_pasien'=>'required|unique:pasiens|max:6',
           'password'=>'required|max:15'
         ]);
@@ -73,7 +112,6 @@ class PasienController extends Controller
       $this->validate($request, [
         'nama_pasien'=>'required|max:50',
         'alamat_pasien'=>'required',
-        'notelp_pasien'=>'required|unique:pasiens|max:12',
         'norm_pasien'=>'required|unique:pasiens|max:6',
         'password'=>'required|max:15'
       ]);
@@ -136,10 +174,12 @@ class PasienController extends Controller
             'message'=>'Data has been updated'
           ]);
         }
-        return response()->json([
-          'status'=>'error',
-          'message'=>'Cant updating data'
-        ], 400);
+        else{
+          return response()->json([
+            'status'=>'error',
+            'message'=>'Cant updating data'
+          ], 400);
+        }
     }
 
     /**

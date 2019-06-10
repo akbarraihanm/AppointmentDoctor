@@ -17,7 +17,6 @@ class CreatePasiensTable extends Migration
             $table->increments('id');
             $table->string('nama_pasien');
             $table->string('alamat_pasien');
-            $table->string('notelp_pasien')->unique();
             $table->string('norm_pasien')->unique();
             $table->string('password');
             $table->timestamps();

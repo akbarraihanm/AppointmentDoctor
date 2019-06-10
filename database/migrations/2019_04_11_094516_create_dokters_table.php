@@ -16,8 +16,7 @@ class CreateDoktersTable extends Migration
         Schema::create('dokters', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nama_dokter');
-            $table->string('notelp_dokter')->unique();
-            $table->string('username')->unique();
+            $table->string('notelp')->unique();
             $table->string('password');
             $table->timestamps();
         });

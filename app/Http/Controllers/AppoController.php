@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Pasien;
 use App\Dokter;
 use App\Appointment;
+use App\Poli;
 use Illuminate\Http\Request;
 
 class AppoController extends Controller
@@ -19,13 +20,26 @@ class AppoController extends Controller
         //
         $appo = Appointment::join('pasiens','appointments.pasien_id','pasiens.id')
         ->join('dokters','appointments.dokter_id','dokters.id')
-        ->select('appointments.id','appointments.dokter_id','appointments.pasien_id','pasiens.nama_pasien',
-        'appointments.status_appo','appointments.tanggal_appo')
+        ->join('polis','appointments.poli_id','polis.id')
+        ->select('appointments.*','pasiens.nama_pasien','pasiens.norm_pasien',
+        'dokters.nama_dokter','polis.nama_poli')
         ->get();
         return response()->json([
           'status'=>'success',
           'data'=>$appo
         ]);
+    }
+
+    public function indexWeb()
+    {
+        //
+        $appo = Appointment::join('pasiens','appointments.pasien_id','pasiens.id')
+        ->join('dokters','appointments.dokter_id','dokters.id')
+        ->join('polis','appointments.poli_id','polis.id')
+        ->select('appointments.*','pasiens.nama_pasien','pasiens.norm_pasien',
+        'dokters.nama_dokter','polis.nama_poli')
+        ->get();
+        return view('index',['appo'=>$appo]);
     }
 
     /**
@@ -58,6 +72,7 @@ class AppoController extends Controller
           'dokter_id'=>$request->dokter_id,
           'poli_id'=>$request->poli_id,
           'status_appo'=>'Menunggu',
+          'keterangan'=>'',
           'tanggal_appo'=>$request->tanggal_appo
           ])){
           return response()->json([
@@ -79,9 +94,39 @@ class AppoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showByPasienId(Request $request)
     {
         //
+        $id = $request->query('id');
+        $appo = Appointment::join('pasiens','appointments.pasien_id','pasiens.id')
+        ->join('dokters','appointments.dokter_id','dokters.id')
+        ->join('polis','appointments.poli_id','polis.id')
+        ->select('appointments.*','pasiens.nama_pasien','dokters.nama_dokter','polis.nama_poli')
+        ->where('pasiens.id',$id)
+        ->get();
+        if($appo){
+          return response()->json([
+            'status'=>'sukses',
+            'data'=>$appo
+          ]);
+        }
+    }
+    public function showByDokterId(Request $request)
+    {
+        //
+        $id = $request->query('id');
+        $appo = Appointment::join('pasiens','appointments.pasien_id','pasiens.id')
+        ->join('dokters','appointments.dokter_id','dokters.id')
+        ->join('polis','appointments.poli_id','polis.id')
+        ->select('appointments.*','pasiens.nama_pasien','dokters.nama_dokter','polis.nama_poli')
+        ->where('dokters.id',$id)
+        ->get();
+        if($appo){
+          return response()->json([
+            'status'=>'sukses',
+            'data'=>$appo
+          ]);
+        }
     }
 
     /**
@@ -102,9 +147,24 @@ class AppoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $id = $request->query('id');
+        $appo = Appointment::where('id',$id)->first();
+        if($appo){
+          $appo->update($request->all());
+          return response()->json([
+            'status'=>'sukses',
+            'pesan'=>'Berhasil update data'
+          ]);
+        }
+        else{
+          return response()->json([
+            'status'=>'error',
+            'pesan'=>'Tidak dapat update data'
+          ]);
+        }
     }
 
     /**
@@ -130,5 +190,12 @@ class AppoController extends Controller
             'message'=>'Cannot deleting data'
           ], 400);
         }
+    }
+
+    public function delete($id){
+      $appo = Appointment::find($id);
+      $appo->delete();
+
+      return redirect('/');
     }
 }

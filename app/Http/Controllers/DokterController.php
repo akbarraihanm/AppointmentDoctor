@@ -19,7 +19,7 @@ class DokterController extends Controller
         //
         // $dokter = Dokter::join('polis','dokters.poli_id','=','polis.id')->select('dokters.*','polis.nama_poli')->get();
         $dokter = Dokter::join('polis','dokters.poli_id','=','polis.id')
-        ->select('dokters.id','dokters.poli_id','nama_poli','dokters.nama_dokter','dokters.notelp_dokter')
+        ->select('dokters.*','polis.nama_poli')
         ->get();
         if($dokter){
           return response()->json([
@@ -31,7 +31,7 @@ class DokterController extends Controller
 
     public function dataDokter(){
       $dokter = Dokter::join('polis','dokters.poli_id','polis.id')
-      ->select('dokters.id','nama_poli','dokters.nama_dokter','dokters.notelp_dokter')
+      ->select('dokters.*','polis.nama_poli')
       ->get();
       if($dokter){
         $poli = Poli::all();
@@ -63,7 +63,6 @@ class DokterController extends Controller
           'poli_id'=>'required',
           'nama_dokter'=>'required',
           'notelp_dokter'=>'required|unique:dokters|max:12',
-          'username'=>'required|unique:dokters|max:15',
           'password'=>'required|min:4|max:15'
         ]);
         if(Dokter::create($request->all())){
@@ -84,8 +83,7 @@ class DokterController extends Controller
       $this->validate($request, [
         'poli_id'=>'required',
         'nama_dokter'=>'required',
-        'notelp_dokter'=>'required|unique:dokters|max:12',
-        'username'=>'required|unique:dokters|max:15',
+        'notelp'=>'required|unique:dokters|max:12',
         'password'=>'required|min:4|max:15'
       ]);
       Dokter::create($request->all());
@@ -102,7 +100,7 @@ class DokterController extends Controller
     {
       $id = $request->query('id');
         $dokter = Dokter::join('polis','polis.id','=','dokters.poli_id')
-        ->select('dokters.id','dokters.poli_id','nama_poli','dokters.nama_dokter','dokters.notelp_dokter')
+        ->select('dokters.*','polis.nama_poli')
         ->where('poli_id',$id)
         ->get();
         if($dokter){

@@ -31,13 +31,7 @@
             <div class="form-group">
               <label for="notelp_dokter">No.Telp</label>
               <div>
-                <input type="text" id="notelp_dokter" class="form-control"  name="notelp_dokter" required="required">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="username">Username</label>
-              <div>
-                <input type="text" id="username" class="form-control"  name="username" required="required">
+                <input type="text" id="notelp_dokter" class="form-control"  name="notelp" required="required">
               </div>
             </div>
             <div class="form-group">

@@ -49,15 +49,35 @@
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>Position</th>
-                    <th>Office</th>
-                    <th>Age</th>
-                    <th>Start date</th>
-                    <th>Salary</th>
+                    <th>Nama Pasien</th>
+                    <th>No. Rekam Medis</th>
+                    <th>Dokter Tujuan</th>
+                    <th>Poli Tujuan</th>
+                    <th>Tanggal</t>
+                    <th>Status</th>
+                    <th>Keterangan</th>
+                    <th>Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
+                  @foreach($appo as $a)
+                  <tr>
+                    <td>{{$a->nama_pasien}}</td>
+                    <td>{{$a->norm_pasien}}</td>
+                    <td>{{$a->nama_dokter}}</td>
+                    <td>{{$a->nama_poli}}</td>
+                    <td>{{$a->tanggal_appo}}</td>
+                    <td>{{$a->status_appo}}</td>
+                    <td>{{$a->keterangan}}</td>
+                    <td>
+                      <form action="{{ url('/hapus/appo', $a->id) }}" method="post">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
+                        <button class="btn btn-danger" type="submit" onclick="return confirm('Yakin ingin menghapus data?')">Hapus</button>
+                      </form>
+                    </td>
+                  </tr>
+                  @endforeach
                 </tbody>
               </table>
             </div>

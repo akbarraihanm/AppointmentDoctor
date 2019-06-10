@@ -23,6 +23,8 @@ Route::get('72318591234/dokterpoli/','DokterController@show');
 Route::get('72318591234/dokterid','DokterController@showIdDokter');
 Route::put('72318591234/dokterid','DokterController@updateByIdDokter');
 
+Route::post('72318591234/pasien/login','PasienController@login');
+Route::get('72318591234/pasien/logout','PasienController@logout');
 Route::get('72318591234/pasien','PasienController@index');
 Route::get('72318591234/pasienid','PasienController@show');
 Route::put('72318591234/pasienid','PasienController@update');
@@ -33,4 +35,8 @@ Route::get('72318591234/jadwalid','JadwalController@show');
 Route::delete('72318591234/jadwalid','JadwalController@destroy');
 Route::get('72318591234/jadwaldokter','JadwalController@showByDokterId');
 
-Route::resource('72318591234/appo','AppoController');
+Route::post('72318591234/appo','AppoController@store');
+Route::get('72318591234/appo','AppoController@index');
+Route::get('72318591234/appo/pasien','AppoController@showByPasienId');
+Route::get('72318591234/appo/dokter','AppoController@showByDokterId');
+Route::put('72318591234/appo','AppoController@update');

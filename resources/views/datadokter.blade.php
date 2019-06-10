@@ -78,7 +78,7 @@
                   <tr>
                     <td>{{$d->nama_dokter}}</td>
                     <td>{{$d->nama_poli}}</td>
-                    <td>{{$d->notelp_dokter}}</td>
+                    <td>{{$d->notelp}}</td>
                     <td>
                       <form action="{{url('/deleteData',$d->id)}}" method="post">
                         {{ csrf_field() }}

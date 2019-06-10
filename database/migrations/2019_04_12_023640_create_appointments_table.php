@@ -17,6 +17,7 @@ class CreateAppointmentsTable extends Migration
             $table->increments('id');
             $table->string('status_appo');
             $table->date('tanggal_appo');
+            $table->string('keterangan');
             $table->timestamps();
         });
         Schema::table('appointments', function(Blueprint $table){

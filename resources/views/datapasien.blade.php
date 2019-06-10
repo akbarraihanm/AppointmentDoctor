@@ -62,7 +62,6 @@
                   <tr>
                     <th>Nama</th>
                     <th>Alamat</th>
-                    <th>No.Telp</th>
                     <th>No.Rekam Medis</th>
                     <th>Aksi</th>
                   </tr>
@@ -72,7 +71,6 @@
                 <tr>
                   <td>{{$p->nama_pasien}}</td>
                   <td>{{$p->alamat_pasien}}</td>
-                  <td>{{$p->notelp_pasien}}</td>
                   <td>{{$p->norm_pasien}}</td>
                   <td>
                     <form action="{{ url('/hapus', $p->id) }}" method="post">

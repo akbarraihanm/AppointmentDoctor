@@ -10,9 +10,12 @@ class Dokter extends Model
     protected $fillable = [
       'poli_id',
       'nama_dokter',
-      'notelp_dokter',
-      'username',
+      'notelp',
       'password'
+    ];
+
+    protected $hidden = [
+        'password',
     ];
 
     public function poli(){
