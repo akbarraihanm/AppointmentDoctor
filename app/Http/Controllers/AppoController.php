@@ -65,15 +65,15 @@ class AppoController extends Controller
           'pasien_id'=>'required',
           'dokter_id'=>'required',
           'poli_id'=>'required',
-          'tanggal_appo'=>'required'
+          'tanggal'=>'required'
         ]);
         if(Appointment::create([
           'pasien_id'=>$request->pasien_id,
           'dokter_id'=>$request->dokter_id,
           'poli_id'=>$request->poli_id,
+          'tanggal'=>$request->tanggal,
           'status_appo'=>'Menunggu',
-          'keterangan'=>'',
-          'tanggal_appo'=>$request->tanggal_appo
+          'keterangan'=>''
           ])){
           return response()->json([
             'status'=>'success',
@@ -101,7 +101,8 @@ class AppoController extends Controller
         $appo = Appointment::join('pasiens','appointments.pasien_id','pasiens.id')
         ->join('dokters','appointments.dokter_id','dokters.id')
         ->join('polis','appointments.poli_id','polis.id')
-        ->select('appointments.*','pasiens.nama_pasien','dokters.nama_dokter','polis.nama_poli')
+        ->select('appointments.*','pasiens.nama_pasien','pasiens.norm_pasien',
+        'dokters.nama_dokter','polis.nama_poli')
         ->where('pasiens.id',$id)
         ->get();
         if($appo){
@@ -118,7 +119,7 @@ class AppoController extends Controller
         $appo = Appointment::join('pasiens','appointments.pasien_id','pasiens.id')
         ->join('dokters','appointments.dokter_id','dokters.id')
         ->join('polis','appointments.poli_id','polis.id')
-        ->select('appointments.*','pasiens.nama_pasien','dokters.nama_dokter','polis.nama_poli')
+        ->select('appointments.*','pasiens.nama_pasien')
         ->where('dokters.id',$id)
         ->get();
         if($appo){

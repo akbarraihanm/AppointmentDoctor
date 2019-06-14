@@ -66,7 +66,7 @@
                     <td>{{$a->norm_pasien}}</td>
                     <td>{{$a->nama_dokter}}</td>
                     <td>{{$a->nama_poli}}</td>
-                    <td>{{$a->tanggal_appo}}</td>
+                    <td>{{$a->tanggal}}</td>
                     <td>{{$a->status_appo}}</td>
                     <td>{{$a->keterangan}}</td>
                     <td>

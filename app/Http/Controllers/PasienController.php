@@ -34,23 +34,14 @@ class PasienController extends Controller
       $norm_pasien = $request->norm_pasien;
       $password = $request->password;
 
-      $pasien = Pasien::where('norm_pasien',$norm_pasien)->first();
-      if(@count($pasien) > 0){
-        $pasien = Pasien::where('password',$password)->first();
-        if(@count($pasien) > 0){
-          Session::put('id',$pasien->id);
-          return response()->json([
-            'status'=>'sukses',
-            'pesan'=>'Anda berhasil masuk',
-            'id_pasien'=>Session::get('id')
-          ]);
-        }
-        else{
-          return response()->json([
-            'status'=>'gagal',
-            'pesan'=>'Password Anda salah'
-          ]);
-        }
+      $login = Pasien::where('norm_pasien',$norm_pasien)->where('password',$password)->first();
+      if(@count($login) > 0){
+        Session::put('id',$login->id);
+        return response()->json([
+          'status'=>'sukses',
+          'pesan'=>'Anda berhasil masuk',
+          'id_pasien'=>Session::get('id')
+        ]);
       }
       else{
         return response()->json([

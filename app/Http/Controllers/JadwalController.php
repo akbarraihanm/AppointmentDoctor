@@ -17,8 +17,7 @@ class JadwalController extends Controller
     {
         //
         $jadwal = Jadwal::join('dokters','jadwals.dokter_id','dokters.id')
-        ->select('jadwals.id','dokter_id','jadwals.poli_id',
-        'nama_dokter','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
+        ->select('jadwals.*','dokters.nama_dokter')
         ->get();
         return response()->json([
           'status'=>'success',
@@ -29,8 +28,7 @@ class JadwalController extends Controller
 
     public function showAllData(){
       $jadwal = Jadwal::join('dokters','jadwals.dokter_id','dokters.id')
-      ->select('jadwals.id','jadwals.dokter_id','jadwals.poli_id',
-      'nama_dokter','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
+        ->select('jadwals.*','dokters.nama_dokter')
       ->get();
       return view('datajadwal',['jadwal'=>$jadwal]);
     }
@@ -56,7 +54,6 @@ class JadwalController extends Controller
         //
         $this->validate($request, [
           'dokter_id'=>'required',
-          'poli_id'=>'required',
           'tanggal'=>'required',
           'jam_mulai'=>'required',
           'jam_selesai'=>'required'
@@ -79,7 +76,6 @@ class JadwalController extends Controller
     public function storeData(Request $request){
       $this->validate($request, [
         'dokter_id'=>'required',
-        'poli_id'=>'required',
         'tanggal'=>'required',
         'jam_mulai'=>'required',
         'jam_selesai'=>'required'
@@ -93,8 +89,7 @@ class JadwalController extends Controller
     public function show(Request $request){
       $id = $request->query('id');
       $jadwal = Jadwal::join('dokters','dokters.id','=','jadwals.dokter_id')
-      ->select('jadwals.id','jadwals.dokter_id','jadwals.poli_id',
-      'dokters.nama_dokter','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
+        ->select('jadwals.*','dokters.nama_dokter')
       ->where('jadwals.id',$id)
       ->get();
       if($jadwal){
@@ -116,8 +111,7 @@ class JadwalController extends Controller
         //
         $id = $request->query('id');
         $jadwal = Jadwal::join('dokters','dokters.id','=','jadwals.dokter_id')
-        ->select('jadwals.id','jadwals.dokter_id','jadwals.poli_id',
-        'dokters.nama_dokter','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
+        ->select('jadwals.*','dokters.nama_dokter')
         ->where('dokter_id',$id)
         ->get();
         if($jadwal){
@@ -136,8 +130,7 @@ class JadwalController extends Controller
 
     public function showJadwalDokter($id){
       $findJadwal = Jadwal::join('dokters','dokters.id','=','jadwals.dokter_id')
-      ->select('jadwals.id','jadwals.dokter_id','jadwals.poli_id',
-      'jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
+        ->select('jadwals.*','dokters.nama_dokter')
       ->where('dokter_id',$id)
       ->get();
       if($findJadwal){

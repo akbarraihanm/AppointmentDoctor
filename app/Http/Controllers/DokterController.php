@@ -154,7 +154,7 @@ class DokterController extends Controller
     {
         //
         $id = $request->query('id');
-        $dokter = Dokter::where('id',$id)->first();
+        $dokter = Dokter::find($id);
         if($dokter){
           $dokter->update($request->all());
           return response()->json([

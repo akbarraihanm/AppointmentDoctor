@@ -79,7 +79,7 @@
             <div class="form-group">
               <label for="notelp_dokter">No.Telp</label>
               <div>
-                <input type="text" id="notelp_dokter" class="form-control"  name="notelp_dokter" value="{{$editData->notelp_dokter}}">
+                <input type="text" id="notelp" class="form-control"  name="notelp" value="{{$editData->notelp}}">
               </div>
             </div>
             <div class="text-center">

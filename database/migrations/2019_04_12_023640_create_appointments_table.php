@@ -16,17 +16,15 @@ class CreateAppointmentsTable extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('status_appo');
-            $table->date('tanggal_appo');
             $table->string('keterangan');
+            $table->string('tanggal');
             $table->timestamps();
-        });
-        Schema::table('appointments', function(Blueprint $table){
-          $table->unsignedInteger('pasien_id');
-          $table->foreign('pasien_id')->references('id')->on('pasiens');
-          $table->unsignedInteger('dokter_id');
-          $table->foreign('dokter_id')->references('id')->on('dokters');
-          $table->unsignedInteger('poli_id');
-          $table->foreign('poli_id')->references('id')->on('polis');
+            $table->unsignedInteger('pasien_id');
+            $table->foreign('pasien_id')->references('id')->on('pasiens');
+            $table->unsignedInteger('dokter_id');
+            $table->foreign('dokter_id')->references('id')->on('dokters');
+            $table->unsignedInteger('poli_id');
+            $table->foreign('poli_id')->references('id')->on('polis');
         });
         Schema::enableForeignKeyConstraints();
     }

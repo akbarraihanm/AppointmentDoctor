@@ -23,8 +23,6 @@ class CreateJadwalsTable extends Migration
         Schema::table('jadwals', function(Blueprint $table){
           $table->unsignedInteger('dokter_id');
           $table->foreign('dokter_id')->references('id')->on('dokters');
-          $table->unsignedInteger('poli_id');
-          $table->foreign('poli_id')->references('id')->on('polis');
         });
         Schema::enableForeignKeyConstraints();
     }

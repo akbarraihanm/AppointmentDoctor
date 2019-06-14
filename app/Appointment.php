@@ -11,8 +11,8 @@ class Appointment extends Model
       'pasien_id',
       'dokter_id',
       'poli_id',
+      'tanggal',
       'status_appo',
-      'tanggal_appo',
       'keterangan'
     ];
     public function dokter(){
