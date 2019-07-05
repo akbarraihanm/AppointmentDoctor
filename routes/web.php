@@ -11,23 +11,29 @@
 |
 */
 
-Route::get('/','AppoController@indexWeb');
-Route::delete('/hapus/appo/{id}','AppoController@delete');
+Route::get('/appointment','AdminController@indexWebAppo');
+Route::delete('/hapus/appo/{id}','AdminController@deleteAppo');
 
-Route::get('/pasien','PasienController@dataPasien');
-Route::post('/daftar','PasienController@tambahData');
-Route::delete('/hapus/{id}', 'PasienController@deleteData');
+Route::get('/history','AdminController@indexHistoryAppo');
 
-Route::get('/dokter','DokterController@dataDokter');
-Route::get('/edit/{id}','DokterController@edit');
-Route::delete('/hapus/dokter/{id}','DokterController@deleteData');
-Route::put('/updateData/{id}','DokterController@updateData');
-Route::post('/addData','DokterController@storeData');
+Route::get('/pasien','AdminController@dataPasien');
+Route::post('/daftar','AdminController@tambahDataPasien');
+Route::delete('/hapus/{id}', 'AdminController@deleteDataPasien');
 
-Route::get('/jadwal/{id}','JadwalController@showJadwalDokter')->name('jadwal');
-Route::post('/tambah-jadwal','JadwalController@storeData');
-Route::delete('/hapusJadwal/{id}','JadwalController@deleteData')->name('hapusJadwal');
+Route::get('/dokter','AdminController@dataDokter');
+Route::get('/edit/{id}','AdminController@editDokter');
+Route::delete('/hapus/dokter/{id}','AdminController@deleteDataDokter');
+Route::put('/updateData/{id}','AdminController@updateDataDokter');
+Route::post('/addData','AdminController@storeDataDokter');
 
-Route::get('/history', function () {
-    return view('history');
+Route::get('/jadwal/{id}','AdminController@showJadwalDokter')->name('jadwal');
+Route::post('/tambah-jadwal','AdminController@storeDataJadwal');
+Route::delete('/hapusJadwal/{id}','AdminController@deleteDataJadwal')->name('hapusJadwal');
+
+Route::get('/', function () {
+    return view('welcome');
 });
+
+Route::get('/masuk-admin', 'AdminController@loginPage');
+Route::post('/loginpost','AdminController@login');
+Route::get('/logout','AdminController@logout');

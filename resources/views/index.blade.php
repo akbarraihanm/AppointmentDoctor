@@ -3,7 +3,7 @@
   <!-- Sidebar -->
   <ul class="sidebar navbar-nav">
     <li class="nav-item active">
-      <a class="nav-link" href="/">
+      <a class="nav-link" href="/appointment">
         <i class="fas fa-fw fa-table"></i>
         <span>Daftar Appointment</span>
       </a>

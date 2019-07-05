@@ -6,6 +6,7 @@ use App\Pasien;
 use App\Dokter;
 use App\Appointment;
 use App\Poli;
+use App\Jadwal;
 use Illuminate\Http\Request;
 
 class AppoController extends Controller
@@ -21,8 +22,9 @@ class AppoController extends Controller
         $appo = Appointment::join('pasiens','appointments.pasien_id','pasiens.id')
         ->join('dokters','appointments.dokter_id','dokters.id')
         ->join('polis','appointments.poli_id','polis.id')
+        ->join('jadwals','appointments.jadwal_id','jadwals.id')
         ->select('appointments.*','pasiens.nama_pasien','pasiens.norm_pasien',
-        'dokters.nama_dokter','polis.nama_poli')
+        'dokters.nama_dokter','polis.nama_poli','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
         ->get();
         return response()->json([
           'status'=>'success',
@@ -65,13 +67,14 @@ class AppoController extends Controller
           'pasien_id'=>'required',
           'dokter_id'=>'required',
           'poli_id'=>'required',
-          'tanggal'=>'required'
+        //   'tanggal'=>'required'
+          'jadwal_id'=>'required'
         ]);
         if(Appointment::create([
           'pasien_id'=>$request->pasien_id,
           'dokter_id'=>$request->dokter_id,
           'poli_id'=>$request->poli_id,
-          'tanggal'=>$request->tanggal,
+          'jadwal_id'=>$request->jadwal_id,
           'status_appo'=>'Menunggu',
           'keterangan'=>''
           ])){
@@ -85,6 +88,25 @@ class AppoController extends Controller
             'status' => 'error',
             'message' => 'Internal server error'
           ], 500);
+        }
+    }
+    
+    public function showByAppoId(Request $request){
+        $id = $request->query('id');
+        $appo = Appointment::join('pasiens','appointments.pasien_id','pasiens.id')
+        ->join('dokters','appointments.dokter_id','dokters.id')
+        ->join('polis','appointments.poli_id','polis.id')
+        ->join('jadwals','appointments.jadwal_id','jadwals.id')        
+        ->select('appointments.*','pasiens.nama_pasien','pasiens.norm_pasien'
+        ,'jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
+        ->where('appointments.id',$id)
+        ->get();
+        
+        if($appo){
+          return response()->json([
+            'status'=>'sukses',
+            'data'=>$appo
+          ]);            
         }
     }
 
@@ -101,8 +123,9 @@ class AppoController extends Controller
         $appo = Appointment::join('pasiens','appointments.pasien_id','pasiens.id')
         ->join('dokters','appointments.dokter_id','dokters.id')
         ->join('polis','appointments.poli_id','polis.id')
+        ->join('jadwals','appointments.jadwal_id','jadwals.id')        
         ->select('appointments.*','pasiens.nama_pasien','pasiens.norm_pasien',
-        'dokters.nama_dokter','polis.nama_poli')
+        'dokters.nama_dokter','polis.nama_poli','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
         ->where('pasiens.id',$id)
         ->get();
         if($appo){
@@ -119,7 +142,8 @@ class AppoController extends Controller
         $appo = Appointment::join('pasiens','appointments.pasien_id','pasiens.id')
         ->join('dokters','appointments.dokter_id','dokters.id')
         ->join('polis','appointments.poli_id','polis.id')
-        ->select('appointments.*','pasiens.nama_pasien')
+        ->join('jadwals','appointments.jadwal_id','jadwals.id')        
+        ->select('appointments.*','pasiens.nama_pasien','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
         ->where('dokters.id',$id)
         ->get();
         if($appo){
@@ -156,7 +180,7 @@ class AppoController extends Controller
         if($appo){
           $appo->update($request->all());
           return response()->json([
-            'status'=>'sukses',
+            'status'=>'success',
             'pesan'=>'Berhasil update data'
           ]);
         }
@@ -174,12 +198,20 @@ class AppoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
-        $appo = Appointment::find($id);
-        $appo->delete();
+        // $appo = Appointment::find($id);
+        $tgl = $request->query('tanggal');
+        $appo = Appointment::join('pasiens','appointments.pasien_id','pasiens.id')
+        ->join('dokters','appointments.dokter_id','dokters.id')
+        ->join('polis','appointments.poli_id','polis.id')
+        ->join('jadwals','appointments.jadwal_id','jadwals.id')        
+        ->select('appointments.*','pasiens.nama_pasien','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
+        ->where('jadwals.tanggal',$tgl)
+        ->first();        
         if($appo){
+          $appo->delete();            
           return response()->json([
             'status'=>'success',
             'message'=>'Data has been deleted'

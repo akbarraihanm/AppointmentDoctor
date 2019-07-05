@@ -11,7 +11,8 @@ class Dokter extends Model
       'poli_id',
       'nama_dokter',
       'notelp',
-      'password'
+      'password',
+      'token_notif'
     ];
 
     protected $hidden = [

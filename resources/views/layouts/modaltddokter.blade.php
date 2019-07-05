@@ -25,19 +25,19 @@
             <div class="form-group">
                 <label for="nama_dokter">Nama Dokter</label>
               <div >
-                <input type="text" id="nama_dokter" class="form-control" name="nama_dokter" required="required">
+                <input type="text" id="nama_dokter" class="form-control" name="nama_dokter" maxlength="45" required="required">
               </div>
             </div>
             <div class="form-group">
               <label for="notelp_dokter">No.Telp</label>
               <div>
-                <input type="text" id="notelp_dokter" class="form-control"  name="notelp" required="required">
+                <input type="text" id="notelp_dokter" class="form-control"  name="notelp" maxlength="12" required="required">
               </div>
             </div>
             <div class="form-group">
               <label for="password">Password</label>
               <div>
-                <input type="password" id="password" class="form-control"  name="password" required="required">
+                <input type="password" id="password" class="form-control" name="password" maxlength="15" required="required">
               </div>
             </div>
             <div class="text-center">

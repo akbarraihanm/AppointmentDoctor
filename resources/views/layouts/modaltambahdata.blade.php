@@ -15,25 +15,25 @@
             <div class="form-group">
                 <label for="nama_pasien">Nama Pasien</label>
               <div >
-                <input type="text" id="nama_pasien" class="form-control" name="nama_pasien" required="required">
+                <input type="text" id="nama_pasien" class="form-control" name="nama_pasien" maxlength="45" required="required">
               </div>
             </div>
             <div class="form-group">
               <label for="alamat_pasien">Alamat</label>
               <div>
-                <input type="text" id="alamat_pasien" class="form-control"  name="alamat_pasien" required="required">
+                <input type="text" id="alamat_pasien" class="form-control"  name="alamat_pasien" maxlength="45" required="required">
               </div>
             </div>
             <div class="form-group">
               <label for="norm_pasien">No.Rekam Medis</label>
               <div>
-                <input type="text" id="norm_pasien" class="form-control"  name="norm_pasien" required="required">
+                <input type="text" id="norm_pasien" class="form-control"  name="norm_pasien" maxlength="6" required="required">
               </div>
             </div>
             <div class="form-group">
               <label for="password">Password</label>
               <div>
-                <input type="password" id="password" class="form-control"  name="password" required="required">
+                <input type="password" id="password" class="form-control"  name="password" maxlength="15" required="required">
               </div>
             </div>
             <div class="text-center">

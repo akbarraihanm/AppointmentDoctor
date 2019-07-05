@@ -127,6 +127,28 @@ class JadwalController extends Controller
           ], 404);
         }
     }
+    
+    public function showByJadwal(Request $request){
+        $tgl = $request->query('tanggal');
+        $id = $request->query('dokter_id');
+        $jadwal = Jadwal::join('dokters','dokters.id','=','jadwals.dokter_id')
+        ->select('jadwals.*','dokters.nama_dokter')
+        ->where('tanggal',$tgl)
+        ->where('dokter_id',$id)
+        ->get();   
+        if($jadwal){
+          return response()->json([
+            'status'=>'success',
+            'data'=>$jadwal
+          ]);
+        }
+        else{
+          return response()->json([
+            'status'=>'error',
+            'message'=>'Data not found'
+          ], 404);
+        }        
+    }    
 
     public function showJadwalDokter($id){
       $findJadwal = Jadwal::join('dokters','dokters.id','=','jadwals.dokter_id')

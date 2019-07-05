@@ -10,7 +10,7 @@
       <!-- <div class="modal-body">Pilih keluar jika ingin beristirahat</div> -->
       <div class="modal-footer">
         <button class="btn btn-secondary" type="button" data-dismiss="modal">Kembali</button>
-        <a class="btn btn-primary" href="#">Keluar</a>
+        <a class="btn btn-primary" href="{{url('/logout')}}">Keluar</a>
       </div>
     </div>
   </div>

@@ -16,4 +16,7 @@ class Jadwal extends Model
     public function dokter(){
       return $this->belongsTo('App\Dokter');
     }
+    public function appo(){
+        return $this->hasMany('App\Appointment');
+    }
 }

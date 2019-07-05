@@ -18,6 +18,7 @@ class CreateDoktersTable extends Migration
             $table->string('nama_dokter');
             $table->string('notelp')->unique();
             $table->string('password');
+            $table->string('token_notif');
             $table->timestamps();
         });
 

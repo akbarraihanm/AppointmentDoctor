@@ -6,6 +6,7 @@ use App\Dokter;
 use App\Poli;
 use App\Jadwal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class DokterController extends Controller
 {
@@ -79,6 +80,40 @@ class DokterController extends Controller
         }
     }
 
+    public function login(Request $request){
+      $notelp = $request->notelp;
+      $password = $request->password;
+
+      $login = Dokter::where('notelp',$notelp)->where('password',$password)->first();
+
+      if(@count($login) > 0){
+        Session::put('id',$login->id);
+        Session::put('namaDokter',$login->nama_dokter);
+        return response()->json([
+          'status'=>'sukses',
+          'pesan'=>'Anda berhasil masuk',
+          'user'=>'dokter',
+          'nama_dokter'=>Session::get('namaDokter'),
+          'id_dokter'=>Session::get('id')
+        ]);
+      }
+      else{
+        return response()->json([
+          'status'=>'gagal',
+          'pesan'=>'Masukkan nomor telepon dan password dengan benar'
+        ]);
+      }
+    }
+
+    public function logout(){
+        Session::flush();
+        return response()->json([
+          'status'=>'sukses',
+          'pesan'=>'Anda berhasil keluar',
+          'login_status'=>Session::flush()
+        ]);
+    }
+
     public function storeData(Request $request){
       $this->validate($request, [
         'poli_id'=>'required',
@@ -86,7 +121,13 @@ class DokterController extends Controller
         'notelp'=>'required|unique:dokters|max:12',
         'password'=>'required|min:4|max:15'
       ]);
-      Dokter::create($request->all());
+      Dokter::create([
+        'poli_id'=>$request->poli_id,
+        'nama_dokter'=>$request->nama_dokter,
+        'notelp'=>$request->notelp,
+        'password'=>$request->password,
+        'token_notif'=>''
+      ]);
       return redirect('/dokter');
     }
 
@@ -168,6 +209,24 @@ class DokterController extends Controller
             'message'=>'Cannot update data'
           ]);
         }
+    }
+    
+    public function updateByNoTelp(Request $request){
+        $id = $request->query('notelp');
+        $dokter = Dokter::where('notelp',$id)->first();
+        if($dokter){
+          $dokter->update($request->all());
+          return response()->json([
+            'status'=>'success',
+            'message'=>'Data has been updated'
+          ]);
+        }
+        else{
+          return response()->json([
+            'status'=>'error',
+            'message'=>'Cannot update data'
+          ]);
+        }        
     }
 
     public function updateData(Request $request, $id){

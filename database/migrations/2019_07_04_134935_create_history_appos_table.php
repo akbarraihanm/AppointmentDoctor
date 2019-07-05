@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAppointmentsTable extends Migration
+class CreateHistoryApposTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAppointmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('appointments', function (Blueprint $table) {
+        Schema::create('history_appos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('status_appo');
             $table->string('keterangan');
@@ -26,7 +26,7 @@ class CreateAppointmentsTable extends Migration
             $table->unsignedInteger('poli_id');
             $table->foreign('poli_id')->references('id')->on('polis');
             $table->unsignedInteger('jadwal_id');
-            $table->foreign('jadwal_id')->references('id')->on('jadwals');
+            $table->foreign('jadwal_id')->references('id')->on('jadwals');            
         });
         Schema::enableForeignKeyConstraints();
     }
@@ -38,6 +38,6 @@ class CreateAppointmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('appointments');
+        Schema::dropIfExists('history_appos');
     }
 }

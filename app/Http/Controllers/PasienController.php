@@ -40,6 +40,7 @@ class PasienController extends Controller
         return response()->json([
           'status'=>'sukses',
           'pesan'=>'Anda berhasil masuk',
+          'user'=>'pasien',
           'id_pasien'=>Session::get('id')
         ]);
       }
@@ -85,7 +86,13 @@ class PasienController extends Controller
           'norm_pasien'=>'required|unique:pasiens|max:6',
           'password'=>'required|max:15'
         ]);
-        if(Pasien::create($request->all())){
+        if(Pasien::create([
+            'nama_pasien'=>$request->nama_pasien,
+            'alamat_pasien'=>$request->alamat_pasien,
+            'norm_pasien'=>$request->norm_pasien,
+            'password'=>$request->password,
+            'token_notif'=>''
+        ])){
           return response()->json([
             'status'=>'success',
             'message'=>'Data has been added'
@@ -106,7 +113,13 @@ class PasienController extends Controller
         'norm_pasien'=>'required|unique:pasiens|max:6',
         'password'=>'required|max:15'
       ]);
-      Pasien::create($request->all());
+      Pasien::create([
+        'nama_pasien'=>$request->nama_pasien,
+        'alamat_pasien'=>$request->alamat_pasien,
+        'norm_pasien'=>$request->norm_pasien,
+        'password'=>$request->password,
+        'token_notif'=>''        
+      ]);
       return redirect('/pasien');
     }
 
@@ -171,6 +184,24 @@ class PasienController extends Controller
             'message'=>'Cant updating data'
           ], 400);
         }
+    }
+    
+    public function updateByNoRm(Request $request){
+        $id = $request->query('norm_pasien');
+        $pasien = Pasien::where('norm_pasien',$id)->first();
+        if($pasien){
+          $pasien->update($request->all());
+          return response()->json([
+            'status'=>'success',
+            'message'=>'Data has been updated'
+          ]);
+        }
+        else{
+          return response()->json([
+            'status'=>'error',
+            'message'=>'Cant updating data'
+          ], 400);
+        }        
     }
 
     /**

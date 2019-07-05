@@ -11,7 +11,8 @@ class Pasien extends Model
       'nama_pasien',
       'alamat_pasien',
       'norm_pasien',
-      'password'
+      'password',
+      'token_notif'
     ];
 
     protected $hidden = [
