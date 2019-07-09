@@ -8,6 +8,7 @@ use App\Appointment;
 use App\Poli;
 use App\Jadwal;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class AppoController extends Controller
 {
@@ -93,19 +94,20 @@ class AppoController extends Controller
     
     public function showByAppoId(Request $request){
         $id = $request->query('id');
+        
         $appo = Appointment::join('pasiens','appointments.pasien_id','pasiens.id')
         ->join('dokters','appointments.dokter_id','dokters.id')
         ->join('polis','appointments.poli_id','polis.id')
-        ->join('jadwals','appointments.jadwal_id','jadwals.id')        
-        ->select('appointments.*','pasiens.nama_pasien','pasiens.norm_pasien'
+        ->join('jadwals','appointments.jadwal_id','jadwals.id');
+        $fix = $appo->select('appointments.*','pasiens.nama_pasien','pasiens.norm_pasien'
         ,'jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
         ->where('appointments.id',$id)
         ->get();
         
-        if($appo){
+        if($fix){
           return response()->json([
             'status'=>'sukses',
-            'data'=>$appo
+            'data'=>$fix
           ]);            
         }
     }
@@ -127,6 +129,7 @@ class AppoController extends Controller
         ->select('appointments.*','pasiens.nama_pasien','pasiens.norm_pasien',
         'dokters.nama_dokter','polis.nama_poli','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
         ->where('pasiens.id',$id)
+        ->orderBy('appointments.id','DESC')
         ->get();
         if($appo){
           return response()->json([
@@ -145,6 +148,7 @@ class AppoController extends Controller
         ->join('jadwals','appointments.jadwal_id','jadwals.id')        
         ->select('appointments.*','pasiens.nama_pasien','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
         ->where('dokters.id',$id)
+        ->orderBy('appointments.id','ASC')
         ->get();
         if($appo){
           return response()->json([
@@ -152,6 +156,44 @@ class AppoController extends Controller
             'data'=>$appo
           ]);
         }
+    }
+    
+    public function showByJadwalId(Request $request){
+        $id = $request->query('jadwal_id');
+        $appo = Appointment::join('pasiens','appointments.pasien_id','pasiens.id')
+        ->join('dokters','appointments.dokter_id','dokters.id')
+        ->join('polis','appointments.poli_id','polis.id')
+        ->join('jadwals','appointments.jadwal_id','jadwals.id')        
+        ->select('appointments.*','pasiens.nama_pasien','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
+        ->where('jadwals.id',$id)
+        ->orderBy('appointments.id','ASC')
+        ->get();
+        if($appo){
+          return response()->json([
+            'status'=>'sukses',
+            'data'=>$appo
+          ]);
+        }
+    }
+    
+    public function showByStatus(Request $request){
+        $status = $request->query('status_appo');
+        $id = $request->query('dokter_id');
+        $appo = Appointment::join('pasiens','appointments.pasien_id','pasiens.id')
+        ->join('dokters','appointments.dokter_id','dokters.id')
+        ->join('polis','appointments.poli_id','polis.id')
+        ->join('jadwals','appointments.jadwal_id','jadwals.id')        
+        ->select('appointments.*','pasiens.nama_pasien','jadwals.tanggal','jadwals.jam_mulai','jadwals.jam_selesai')
+        ->where('appointments.status_appo',$status)
+        ->where('appointments.dokter_id',$id)
+        ->orderBy('appointments.id','ASC')
+        ->get();  
+        if($appo){
+          return response()->json([
+            'status'=>'sukses',
+            'data'=>$appo
+          ]);
+        }        
     }
 
     /**

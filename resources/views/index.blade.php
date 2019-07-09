@@ -73,7 +73,7 @@
                       <form action="{{ url('/hapus/appo', $a->id) }}" method="post">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
-                        <button class="btn btn-danger" type="submit" onclick="return confirm('Yakin ingin menghapus data?')">Hapus</button>
+                        <button class="btn btn-danger" type="submit" onclick="return confirm('Apakah permintaan sudah selesai?')">Selesai</button>
                       </form>
                     </td>
                   </tr>

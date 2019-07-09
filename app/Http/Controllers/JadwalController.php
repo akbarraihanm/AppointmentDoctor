@@ -113,6 +113,7 @@ class JadwalController extends Controller
         $jadwal = Jadwal::join('dokters','dokters.id','=','jadwals.dokter_id')
         ->select('jadwals.*','dokters.nama_dokter')
         ->where('dokter_id',$id)
+        ->orderBy('jadwals.tanggal','DESC')
         ->get();
         if($jadwal){
           return response()->json([

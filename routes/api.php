@@ -46,5 +46,7 @@ Route::get('72318591234/appo','AppoController@index');
 Route::get('72318591234/appo/id','AppoController@showByAppoId');
 Route::get('72318591234/appo/pasien','AppoController@showByPasienId');
 Route::get('72318591234/appo/dokter','AppoController@showByDokterId');
+Route::get('72318591234/appo/jadwal','AppoController@showByJadwalId');
+Route::get('72318591234/appo/status','AppoController@showByStatus');
 Route::put('72318591234/appo/update','AppoController@update');
 Route::delete('72318591234/appo/delete','AppoController@destroy');
